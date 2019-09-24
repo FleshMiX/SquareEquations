@@ -1,2 +1,0 @@
-# SquareEquations
-Solving square equations
