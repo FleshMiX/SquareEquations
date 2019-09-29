@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
-#include "square.h"
+#include <square.h>
 
 enum nRoots
 {
@@ -22,20 +19,37 @@ int main ()
 	{
 		printf("Wrong entry(\nTry again!\n");
 		printf("This program solves square equation of this kind: Ax^2+Bx+C = 0\nEnter A, B, C: ");
-		fflush(stdin);
+		flush_input();
 	}
+	
+	if(!(a == a))
+	{
+		printf("\na is NAN\n");
+		return 1;
+	}
+	if(!(b == b))
+	{
+		printf("\nb is NAN\n");
+		return 1;
+	}
+	if(!(c == c))
+	{
+		printf("\nc is NAN\n");
+		return 1;
+	}
+	
 	float x1 = NAN, x2 = NAN;
 
 	int nRoots = SquareSolve(a, b, c, &x1, &x2);
 	
 	switch(nRoots){
-	case 0:
+	case NO_ROOTS:
 		printf("This equation have no roots:(\n");
 		break;
-	case 1:
+	case ONE_ROOT:
 		printf("This equation have one root (x = %g)\n", x1);
 		break;
-	case 2:
+	case TWO_ROOTS:
 		printf("This equation have two roots (x1 = %g , x2 = %g)\n", x1, x2);
 		break;
 	case INF_NUM_ROOTS:
