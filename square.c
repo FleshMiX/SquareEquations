@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
-#include <stdlib.h>
+#include <square.h>
 
 const float EPS = 0.000001;
 
@@ -12,6 +9,12 @@ enum nRoots
 	ONE_ROOT,
 	TWO_ROOTS
 };
+
+void flush_input(void) 
+{
+    char c;
+    while ( scanf("%c", &c) == 1 && c != '\n' );
+}
 
 /*!
 This func checking equality of x & y with spared accuracy EPS
@@ -77,11 +80,29 @@ int SquareSolve (float a, float b, float c, float* x1, float* x2)
 	*x1 = NAN;
 	*x2 = NAN;
 	
-	if (SparedEquality(a, 0)) /* (a ==0 ) */
+	if (SparedEquality(a, 0)) /* (a == 0 ) */
 	{
 		return LinearSolve(b, c, x1);
 	}
-	/*(a != 0 */
+	/*(a != 0)*/
+	if (SparedEquality(b, 0)) /* (x^2 = -c/a) */
+	{
+		if (SparedEquality(c, 0))
+		{
+			*x1 = 0;
+			return ONE_ROOT;
+		}
+		if(c*a > 0) return NO_ROOTS; 
+		*x1 = sqrt(c/a);
+		*x2 = -*x1;
+		return TWO_ROOTS;
+	}
+	if(SparedEquality(c, 0)) /* (ax^2 + bx = 0) */
+	{
+		*x1 = 0;
+		*x2 = -b/a;
+		return TWO_ROOTS;
+	}
 	float Discriminant = b*b - 4*a*c;
 	if (Discriminant < 0)
 		return NO_ROOTS;
