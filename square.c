@@ -1,4 +1,4 @@
-#include <square.h>
+#include "square.h"
 
 const float EPS = 0.000001;
 
